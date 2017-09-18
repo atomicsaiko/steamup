@@ -30,7 +30,7 @@ module Steamup
 
     # Initiatize database connection upon entering the console
     console do
-      ActiveRecord::Bsse.connection
+      ActiveRecord::Base.connection
     end
   end
 end

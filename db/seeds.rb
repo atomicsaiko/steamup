@@ -5,3 +5,20 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Admin.destroy_all
+Admin.create!(email: "admin@steamup.com", password: "abcd1234")
+
+Student.destroy_all
+Student.create!(email: "kevin@steamup.com", password: "abcd1234")
+Student.create!(email: "eva@steamup.com", password: "abcd1234")
+Student.create!(email: "jan@steamup.com", password: "abcd1234")
+Student.create!(email: "megan@steamup.com", password: "abcd1234")
+Student.create!(email: "mimi@steamup.com", password: "abcd1234")
+Student.create!(email: "marloes@steamup.com", password: "abcd1234")
+Student.create!(email: "job@steamup.com", password: "abcd1234")
+Student.create!(email: "willem@steamup.com", password: "abcd1234")
+Student.create!(email: "deborah@steamup.com", password: "abcd1234")
+Student.create!(email: "faisal@steamup.com", password: "abcd1234")
+Student.create!(email: "tristan@steamup.com", password: "abcd1234")
+Student.create!(email: "matthijs@steamup.com", password: "abcd1234")
