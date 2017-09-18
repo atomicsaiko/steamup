@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   devise_for :admins, path: 'admins', controllers: { sessions: "admins/sessions" }
 
   resources :students, only: [:show]
-
+  resources :admins, only: [:show]
 end
