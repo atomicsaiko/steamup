@@ -27,5 +27,10 @@ module Steamup
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Initiatize database connection upon entering the console
+    console do
+      ActiveRecord::Bsse.connection
+    end
   end
 end
