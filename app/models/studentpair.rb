@@ -1,0 +1,2 @@
+class Studentpair < ApplicationRecord
+end
