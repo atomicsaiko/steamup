@@ -24,7 +24,7 @@ class Studentpair < ApplicationRecord
     date_input < get_date ? "The set date provided is before today" : date_input
   end
 
-  def store_student_pair(student1, student2)
-    Studentpair.new(student1: student1, student2: student2, date:)
+  def self.store_student_pair(student1, student2, date)
+    Studentpair.create!(student1: student1, student2: student2, date: date)
   end
 end
