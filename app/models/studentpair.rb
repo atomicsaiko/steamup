@@ -8,7 +8,7 @@ class Studentpair < ApplicationRecord
     @available_students = studentlist - assigned_students1 - assigned_students2
   end
 
-  def get_random_student(@available_students)
+  def get_random_student
     student = nil
 
     loop do
@@ -66,5 +66,10 @@ class Studentpair < ApplicationRecord
     else
       "Your pair for today (#{date_input}) is #{studentpair[0]["student1"]}"
     end
+  end
+
+  def get_student_name(student)
+    student = Student.find(student)
+    puts student.email
   end
 end
