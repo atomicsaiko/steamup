@@ -1,8 +1,7 @@
 class Studentpair < ApplicationRecord
+
   def get_random_student
-    Student.order("RANDOM()").limit(1).map{ |student| student.send(:id) }
-
-
+    Student.order("RANDOM()").limit(1).ids.join.to_i
   end
 
   def create_random_studentpair
@@ -23,5 +22,9 @@ class Studentpair < ApplicationRecord
   def set_date(date)
     date_input = Date.parse(date.to_s)
     date_input < get_date ? "The set date provided is before today" : date_input
+  end
+
+  def store_student_pair(student1, student2)
+    Studentpair.new(student1: student1, student2: student2, date:)
   end
 end
