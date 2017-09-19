@@ -61,15 +61,18 @@ class Studentpair < ApplicationRecord
     studentpair = Studentpair
       .where("(student1 = ? OR student2 = ?) AND date = ?", student, student, date)
 
-    if studentpair[0]["student1"] == student
-      "Your pair for today (#{date_input}) is #{studentpair[0]["student2"]}"
+    student1 = studentpair[0]["student1"]
+    student2 = studentpair[0]["student2"]
+
+    if student1 == student
+      "Your pair for today (#{date_input}) is #{get_student_name(student2)}"
     else
-      "Your pair for today (#{date_input}) is #{studentpair[0]["student1"]}"
+      "Your pair for today (#{date_input}) is #{get_student_name(student1)}"
     end
   end
 
-  def get_student_name(student)
+  def self.get_student_name(student)
     student = Student.find(student)
-    puts student.email
+    student.email
   end
 end
