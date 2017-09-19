@@ -1,7 +1,21 @@
 class Studentpair < ApplicationRecord
 
-  def self.get_random_student
-    Student.order("RANDOM()").limit(1).ids.join.to_i
+  def available_students
+    studentlist = Student.all.ids
+    assigned_students1 = Studentpair.all.pluck(:student1)
+    assigned_students2 = Studentpair.all.pluck(:student2)
+
+    @available_students = studentlist - assigned_students1 - assigned_students2
+  end
+
+  def get_random_student(@available_students)
+    student = nil
+
+    loop do
+      student = Student.order("RANDOM()").limit(1).ids.join.to_i
+      break if @available_students.include?(student)
+    end
+    return student
   end
 
   def self.create_random_studentpair
