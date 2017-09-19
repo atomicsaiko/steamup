@@ -1,10 +1,20 @@
 class Studentpair < ApplicationRecord
 
-  def get_random_student
+  def self.get_random_student
     Student.order("RANDOM()").limit(1).ids.join.to_i
   end
 
-  def create_random_studentpair
+  def self.create_random_studentpair
+    student1 = nil
+    student2 = nil
+
+    loop do
+      student1 = get_random_student
+      student2 = get_random_student
+      break if student1 != student2
+    end
+
+    return student1, student2
   end
 
   def self.validate_studentpair(student1, student2)
@@ -26,5 +36,21 @@ class Studentpair < ApplicationRecord
 
   def self.store_student_pair(student1, student2, date)
     Studentpair.create!(student1: student1, student2: student2, date: date)
+  end
+
+  def steamup
+  end
+
+  def self.get_studentpair_day(student, date)
+    date_input = Date.parse(date.to_s)
+
+    studentpair = Studentpair
+      .where("(student1 = ? OR student2 = ?) AND date = ?", student, student, date)
+
+    if studentpair[0]["student1"] == student
+      "Your pair for today (#{date_input}) is #{studentpair[0]["student2"]}"
+    else
+      "Your pair for today (#{date_input}) is #{studentpair[0]["student1"]}"
+    end
   end
 end
