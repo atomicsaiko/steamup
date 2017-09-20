@@ -26,4 +26,4 @@ Student.create!(email: "matthijs@steamup.com", password: "abcd1234")
 Studentpair.destroy_all
 Studentpair.create!(student1: 11, student2: 9, date: Date.iso8601('2017-09-19'))
 Studentpair.create!(student1: 11, student2: 10, date: Date.iso8601('2017-09-20'))
-Studentpair.create!(student1: 11, student2: 13, date: Date.iso8601('2017-09-18'))
+Studentpair.create!(student1: 11, student2: 8, date: Date.iso8601('2017-09-18'))

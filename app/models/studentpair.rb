@@ -1,49 +1,50 @@
 class Studentpair < ApplicationRecord
 
-  def available_students
+  def self.available_students
     studentlist = Student.all.ids
     assigned_students1 = Studentpair.all.pluck(:student1)
     assigned_students2 = Studentpair.all.pluck(:student2)
 
-    @available_students = studentlist - assigned_students1 - assigned_students2
+    available_students = studentlist - assigned_students1 - assigned_students2
+
+    return available_students
   end
 
-  def get_random_student
-    student = nil
-
+  def self.get_random_student(available_students)
     loop do
-      student = Student.order("RANDOM()").limit(1).ids.join.to_i
-      break if @available_students.include?(student)
+      @student = Student.order("RANDOM()").limit(1).ids.join.to_i
+      break if available_students.include?(@student) || available_students == []
     end
-    return student
+
+    return @student
   end
 
-  def self.create_random_studentpair
-    student1 = nil
-    student2 = nil
-
+  def self.create_random_studentpair(student1)
     loop do
-      student1 = get_random_student
-      student2 = get_random_student
-      break if student1 != student2
+      @student2 = get_random_student(available_students)
+      break if student1 != @student2
     end
 
-    return student1, student2
+    puts "#{student1} and #{@student2}"
+    return @student2
   end
 
   def self.validate_studentpair(student1, student2)
     studentpair = Studentpair
-      .where("student1 = ? AND student2 = ?", student1, student2)
+      .where("(student1 = ? AND student2 = ?) OR (student2 = ? AND student1 = ?)",
+      student1, student2,
+      student1, student2,
+    )
 
-    studentpair != []
+    studentpair == []
   end
 
-  def get_date
+  def self.get_date
     # Date.today.strftime("%A")
     Date.today
   end
 
-  def set_date(date)
+  def self.set_date(date)
     date_input = Date.parse(date.to_s)
     date_input < get_date ? "The set date provided is before today" : date_input
   end
@@ -52,7 +53,35 @@ class Studentpair < ApplicationRecord
     Studentpair.create!(student1: student1, student2: student2, date: date)
   end
 
-  def steamup
+  def self.steamup(date)
+    pairs_date = set_date(date)
+    students_count = Student.count
+    student1 = nil
+
+    while students_count > 1
+      puts "Students count before pairing two students at random: #{students_count}"
+
+      if student1 != nil
+        x = available_students - [student1] - [@student2]
+      else
+        x = available_students
+      end
+
+      get_random_student(x)
+      student1 = @student
+
+      loop do
+        create_random_studentpair(student1)
+        studentpair_valid = validate_studentpair(student1, @student2) # Unsure
+        break if studentpair_valid == true
+      end
+
+      store_student_pair(student1, @student2, pairs_date)
+
+      puts "#{Studentpair.last}"
+      students_count = students_count - 2
+      puts "Student count after storing to database: #{students_count}"
+    end
   end
 
   def self.get_studentpair_day(student, date)
