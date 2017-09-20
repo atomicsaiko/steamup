@@ -7,6 +7,7 @@ class Studentpair < ApplicationRecord
 
     available_students = studentlist - assigned_students1 - assigned_students2
     puts "$$$$$$$ >> The available students array: #{available_students}"
+
     return available_students
   end
 
@@ -51,6 +52,7 @@ class Studentpair < ApplicationRecord
 
   def self.store_student_pair(student1, student2, date)
     Studentpair.create!(student1: student1, student2: student2, date: date)
+
   end
 
   def self.steamup(date)
