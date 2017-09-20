@@ -1,11 +1,12 @@
 class Studentpair < ApplicationRecord
 
-  def self.available_students
+  def self.available_students_date(date)
     studentlist = Student.all.ids
-    assigned_students1 = Studentpair.all.pluck(:student1)
-    assigned_students2 = Studentpair.all.pluck(:student2)
+    assigned_students1 = Studentpair.all.where(date: date).pluck(:student1)
+    assigned_students2 = Studentpair.all.where(date: date).pluck(:student2)
 
     available_students = studentlist - assigned_students1 - assigned_students2
+    puts "$$$$$$$ >> The available students array: #{available_students}"
 
     return available_students
   end
@@ -13,15 +14,15 @@ class Studentpair < ApplicationRecord
   def self.get_random_student(available_students)
     loop do
       @student = Student.order("RANDOM()").limit(1).ids.join.to_i
-      break if available_students.include?(@student) || available_students == []
+      break if available_students.include?(@student)
     end
 
     return @student
   end
 
-  def self.create_random_studentpair(student1)
+  def self.create_random_studentpair(student1, date)
     loop do
-      @student2 = get_random_student(available_students)
+      @student2 = get_random_student(Studentpair.available_students_date(date))
       break if student1 != @student2
     end
 
@@ -51,6 +52,7 @@ class Studentpair < ApplicationRecord
 
   def self.store_student_pair(student1, student2, date)
     Studentpair.create!(student1: student1, student2: student2, date: date)
+
   end
 
   def self.steamup(date)
@@ -58,20 +60,15 @@ class Studentpair < ApplicationRecord
     students_count = Student.count
     student1 = nil
 
-    while students_count > 1
+    while students_count > 1 && Studentpair.available_students_date(pairs_date) != []
       puts "Students count before pairing two students at random: #{students_count}"
 
-      if student1 != nil
-        x = available_students - [student1] - [@student2]
-      else
-        x = available_students
-      end
-
+      x = available_students_date(pairs_date)
       get_random_student(x)
       student1 = @student
 
       loop do
-        create_random_studentpair(student1)
+        create_random_studentpair(student1, pairs_date)
         studentpair_valid = validate_studentpair(student1, @student2) # Unsure
         break if studentpair_valid == true
       end
