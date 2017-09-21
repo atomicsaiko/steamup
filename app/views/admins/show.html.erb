@@ -7,27 +7,28 @@
 
 <p><%= "=" * 50 %></p>
 
-<p>Monday</p>
+<b><p>Monday</p></b>
 <% @monday.each do |pair| %>
-<p>Student 1 is: <%= pair.student1 %> and Student 2 is: <%= pair.student2 %>
+<p>Student 1 is: <%= Student.find(pair.student1).email %> + Student 2 is: <%= Student.find(pair.student2).email %>
 <% end %>
+<!-- <p>%%%%% <#%= @monday_date %></p> -->
 
-<p>Tuesday</p>
+<b><p>Tuesday</p></b>
 <% @tuesday.each do |pair| %>
 <p>Student 1 is: <%= pair.student1 %> and Student 2 is: <%= pair.student2 %>
 <% end %>
 
-<p>Wednesday</p>
+<b><p>Wednesday</p></b>
 <% @wednesday.each do |pair| %>
 <p>Student 1 is: <%= pair.student1 %> and Student 2 is: <%= pair.student2 %>
 <% end %>
 
-<p>Thursday</p>
+<b><p>Thursday</p></b>
 <% @thursday.each do |pair| %>
 <p>Student 1 is: <%= pair.student1 %> and Student 2 is: <%= pair.student2 %>
 <% end %>
 
-<p>Friday</p>
+<b><p>Friday</p></b>
 <% @friday.each do |pair| %>
 <p>Student 1 is: <%= pair.student1 %> and Student 2 is: <%= pair.student2 %>
 <% end %>
