@@ -1,28 +1,5 @@
 class Studentpair < ApplicationRecord
 
-  def self.circulation_setup
-    students = Student.all.ids
-    pairs = Studentpair.full_circulation(students)
-
-    pairs.each_with_index do |day, index|
-      day_pairs = day.map{ |pair| "(#{pair.first}, #{pair.last})" }.join(", ")
-      puts "Day #{index + 1}: #{day_pairs}"
-    end
-
-  end
-
-  def self.full_circulation(students)
-    students.push(nil) if students.size.odd?
-    n = students.size
-    pivot = students.pop
-    pairs = (n - 1).times.map do
-      students.rotate!
-      [[students.first, pivot]] + (1...(n / 2)).map { |j| [students[j], students[n - 1 - j]] }
-    end
-    students.push(pivot) unless pivot.nil?
-    pairs
-  end
-
   def self.build_robin
     students = Student.all.ids
     students.push('x') if students.size.odd?
@@ -48,23 +25,55 @@ class Studentpair < ApplicationRecord
     n = students.size
     half_n = n / 2
     king = [students[0]]
-    first_half1 = students[1..(half_n - 1)]
-    second_half1 = students[half_n..-1].reverse
-    date = Date.today + 1.day
-    i = 0
+    first_half = students[1..(half_n - 1)]
+    second_half = students[half_n..-1].reverse
+    date = Date.today
+    day = 0
 
-    first_half_next = king + [second_half1[0]] + (first_half1 - [first_half1.last])
-    second_half_next = (second_half1 - [second_half1[0]]) + [first_half1.last]
+    first_half_next = king + [second_half[0]] + (first_half - [first_half.last])
+    second_half_next = (second_half - [second_half[0]]) + [first_half.last]
 
     students1 = first_half_next
     students2 = second_half_next
     date = date + 1.day
 
-    while i < half_n do
+    while day < half_n do
       Studentpair.create!(student1: students1.shift, student2: students2.shift, date: date)
-      i += 1
+      day += 1
     end
+  end
 
+  def self.build_robin_rest_of_days
+    students = Student.all.ids
+    students.push('x')  if students.size.odd?
+    n = students.size
+    half_n = n / 2
+    king = [students[0]]
+    date = Date.today + 1.day
+    all_days = 2
+
+    while all_days < (n - 1) do
+      first_half = Studentpair.all.where(date: date).pluck(:student1)
+      second_half = Studentpair.all.where(date: date).pluck(:student2)
+      first_half_next = king + [second_half[0]] + (first_half - [first_half[0]])
+      second_half_next = (second_half - [second_half[0]]) + [first_half.last]
+      date = date + 1.day
+      day = 0
+
+      while day < half_n do
+        students1 = first_half_next
+        students2 = second_half_next
+        Studentpair.create!(student1: students1.shift, student2: students2.shift, date: date)
+        day += 1
+      end
+    all_days += 1
+    end
+  end
+
+  def self.steamup
+    Studentpair.build_robin
+    Studentpair.build_robin_next_day
+    Studentpair.build_robin_rest_of_days
   end
 
 
