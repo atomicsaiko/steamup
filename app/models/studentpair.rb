@@ -86,6 +86,26 @@ class Studentpair < ApplicationRecord
     Studentpair.build_robin_rest_of_days
   end
 
+  def get_studentpair_day2(student, date)
+    date_input = Date.parse(date.to_s)
+
+    studentpair = Studentpair
+      .where("(student1 = ? OR student2 = ?) AND date = ?", student, student, date)
+
+    student1 = studentpair[0]["student1"]
+    student2 = studentpair[0]["student2"]
+
+    if student1 == student
+      "Your pair for today (#{date_input}) is #{get_student_name(student2)}"
+    else
+      "Your pair for today (#{date_input}) is #{get_student_name(student1)}"
+    end
+  end
+
+  def self.get_student_name(student)
+    student = Student.find(student)
+    student.email
+  end
 end
 
 # def self.available_students_date(date)
