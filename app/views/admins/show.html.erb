@@ -1,1 +1,33 @@
-<p>I'm the admin.</p>
+<p>I'm the admin!</p>
+
+<p>Your Admin ID: <%= @admin.id %></p>
+<p>Today's date: <%= @date %></p>
+<p>Day of the week: <%= @dayofweek %></p>
+<p>Weeknumber: <%= @weeknumber %></p>
+
+<p><%= "=" * 50 %></p>
+
+<p>Monday</p>
+<% @monday.each do |pair| %>
+<p>Student 1 is: <%= pair.student1 %> and Student 2 is: <%= pair.student2 %>
+<% end %>
+
+<p>Tuesday</p>
+<% @tuesday.each do |pair| %>
+<p>Student 1 is: <%= pair.student1 %> and Student 2 is: <%= pair.student2 %>
+<% end %>
+
+<p>Wednesday</p>
+<% @wednesday.each do |pair| %>
+<p>Student 1 is: <%= pair.student1 %> and Student 2 is: <%= pair.student2 %>
+<% end %>
+
+<p>Thursday</p>
+<% @thursday.each do |pair| %>
+<p>Student 1 is: <%= pair.student1 %> and Student 2 is: <%= pair.student2 %>
+<% end %>
+
+<p>Friday</p>
+<% @friday.each do |pair| %>
+<p>Student 1 is: <%= pair.student1 %> and Student 2 is: <%= pair.student2 %>
+<% end %>
