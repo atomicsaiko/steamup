@@ -85,6 +85,7 @@ class Studentpair < ApplicationRecord
     Studentpair.build_robin_next_day
     Studentpair.build_robin_rest_of_days
   end
+
 end
 
 # def self.available_students_date(date)
