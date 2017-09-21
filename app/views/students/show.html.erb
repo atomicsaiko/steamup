@@ -4,7 +4,9 @@
 <p>Your pair for today is:
   <% if @partner.student1 == @student.id %>
   <%= @partner2_email %>
+  <%= @partner.student2 %>
   <% else %>
   <%= @partner1_email %>
+  <%= @partner.student1 %>
   <% end %>
 </p>
