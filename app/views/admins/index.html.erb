@@ -1,0 +1,20 @@
+<p>Admin index page</p>
+
+<b><p>STUDENTS</p></b>
+<p><%= "=" * 50 %></p>
+<% @students.each do |student| %>
+<p>ID
+  <%= student.id %>.
+  <%= student.email %> |
+  <%= link_to "Promote to Admin", promote_path(student), class: 'btn btn-default' %></p>
+<% end %>
+</br>
+
+<b><p>ADMINS</p></b>
+<p><%= "=" * 50 %></p>
+<% @admins.each do |admin| %>
+<p>ID
+  <%= admin.id %>.
+  <%= admin.email %> |
+  <%= link_to "Demote to Student", demote_path(admin), class: 'btn btn-default' %></p>
+<% end %>
