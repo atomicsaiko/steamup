@@ -1,5 +1,3 @@
-require 'date'
-
 class AdminsController < ApplicationController
   before_action :authenticate_admin!
   before_action :get_date
@@ -14,8 +12,7 @@ class AdminsController < ApplicationController
     @admin = Admin.find(params[:id])
   end
 
-
-  private
+  #private
 
   def get_date
     @date = Date.today + (7 - Date.today.strftime('%u').to_i).days
