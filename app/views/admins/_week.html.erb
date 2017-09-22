@@ -5,6 +5,8 @@
 <% wkEnd = Date.commercial(year, week, 6) %>
 <% pairs = Studentpair.where(date: date).all %>
 
+<h1>Today's couples</h1>
+
 <% for pairs in Studentpair.where(date: wkBegin..wkEnd) %>
   <% while date.wday > 0 && date.wday < 6 do %>
     <% pairs = Studentpair.where(date: date).all %>
