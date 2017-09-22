@@ -1,0 +1,19 @@
+<% date = Date.today + (7 - Date.today.strftime('%u').to_i).days %>
+<% date = date + 2.day if date.wday == 6 %>
+<% date = date + 1.day if date.wday == 0 %>
+<% week = Date.today.strftime('%V').to_i + 1 %>
+<% year = date.year %>
+<% wkBegin = Date.commercial(year, week, 1) %>
+<% wkEnd = Date.commercial(year, week, 6) %>
+<% pairs = Studentpair.where(date: wkBegin..wkEnd).all %>
+
+<% for pairs in Studentpair.where(date: wkBegin..wkEnd) %>
+  <% while date.wday > 0 && date.wday < 6 do %>
+    <% pairs = Studentpair.where(date: date).all %>
+    <b><p><%=date.strftime("%A")%></p></b>
+      <% pairs.each do |pair| %>
+      <p><%= (Student.find(pair.student1).email).chomp('@steamup.com') %> + <%= Student.find(pair.student2).email.chomp('@steamup.com') %></p>
+      <% end %>
+    <% date += 1.day %>
+  <% end %>
+<% end %>

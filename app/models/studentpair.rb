@@ -15,10 +15,10 @@ class Studentpair < ApplicationRecord
     date = date + 1.day if date.wday == 0
     i = 0
 
-      while i < half_n do
-        Studentpair.create!(student1: students1.shift, student2: students2.shift, date: date)
-        i += 1
-      end
+    while i < half_n do
+      Studentpair.create!(student1: students1.shift, student2: students2.shift, date: date)
+      i += 1
+    end
   end
 
   def self.build_robin_next_day
@@ -106,7 +106,26 @@ class Studentpair < ApplicationRecord
     student = Student.find(student)
     student.email
   end
+
 end
+
+
+# def self.first_day
+#   date_now = Date.today
+#   first_record = Studentpair.order(date: :asc).limit(1).pluck(:date)
+#   if date_now < first_record
+#   return date_
+# end
+# def self.put_student_in_weekday
+#   pair_day = Studentpair[:date]
+#   date = Date.parse(pair_day)
+#
+#   @monday << Studentpair[:student1, :student2] if date.wday == 1
+#             if date.wday == 2
+#   @wednesday << Studentpair.pluck[:student1, :student2] if date.wday == 3
+#   @thursday if date.wday == 4
+#   @friday if date.wday == 5
+# end
 
 # def self.available_students_date(date)
 #   studentlist = Student.all.ids
