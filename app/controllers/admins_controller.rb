@@ -7,6 +7,7 @@ class AdminsController < ApplicationController
   end
 
   def show
+    @studentpair_count = Studentpair.all.count
     @admin = Admin.find(params[:id])
   end
 
@@ -29,5 +30,19 @@ class AdminsController < ApplicationController
     else
       redirect_to admins_path, notice: "Can't delete last Admin!"
     end
+  end
+
+  def create_studentpairs
+    admin = Admin.find(params[:id])
+    Studentpair.steamup
+
+    redirect_to admin_path(admin), notice: "Created Studentpairs"
+  end
+
+  def delete_studentpairs
+    admin = Admin.find(params[:id])
+    Studentpair.destroy_all
+
+    redirect_to admin_path(admin), notice: "Deleted all Studentpairs"
   end
 end

@@ -1,4 +1,4 @@
-<p>Index page</p>
+<p>Admin index page</p>
 
 <b><p>STUDENTS</p></b>
 <p><%= "=" * 50 %></p>
@@ -6,7 +6,7 @@
 <p>ID
   <%= student.id %>.
   <%= student.email %> |
-  <%= link_to "Promote to Admin", promote_path(student) %></p>
+  <%= link_to "Promote to Admin", promote_path(student), class: 'btn btn-default' %></p>
 <% end %>
 </br>
 
@@ -16,5 +16,5 @@
 <p>ID
   <%= admin.id %>.
   <%= admin.email %> |
-  <%= link_to "Demote to Student", demote_path(admin) %></p>
+  <%= link_to "Demote to Student", demote_path(admin), class: 'btn btn-default' %></p>
 <% end %>
