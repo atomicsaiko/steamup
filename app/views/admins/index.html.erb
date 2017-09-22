@@ -1,14 +1,12 @@
 <p>Index page</p>
 
-<!-- /students/:id/promote -->
-
 <b><p>STUDENTS</p></b>
 <p><%= "=" * 50 %></p>
 <% @students.each do |student| %>
 <p>ID
   <%= student.id %>.
   <%= student.email %> |
-  <%= link_to "Promote to Admin", student_promote_path(student) %></p>
+  <%= link_to "Promote to Admin", promote_path(student) %></p>
 <% end %>
 </br>
 

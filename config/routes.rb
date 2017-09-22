@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   resources :students, only: [:show]
   resources :admins, only: [:index, :show]
 
-  get '/students/:id/promote', to: 'admin#promote_to_admin', as: :student_promote
+  get '/admins/promote/:id', to: 'admins#promote_to_admin', as: :promote
 end
