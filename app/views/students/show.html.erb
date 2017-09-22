@@ -1,12 +1,19 @@
-<p>Your Student ID: <%= @student.id %></p>
-<p>Today's date: <%= @date %></p>
+<div class = "container">
+  <p>Your Student ID: <%= @student.id %></p>
+  <p>Today's date: <%= Date.today.to_formatted_s(:rfc822)  %></p>
 
-<p>Your pair for today is:
-  <% if @partner.student1 == @student.id %>
-  <%= @partner2_email %>
-  <%= @partner.student2 %>
-  <% else %>
-  <%= @partner1_email %>
-  <%= @partner.student1 %>
-  <% end %>
-</p>
+  <hr />
+  <h4>Today you Team Up with:</h4>
+  <hr />
+    <% if @partner.student1 == @student.id %>
+    <h2><%= @partner2_email.chomp('@steamup.com').capitalize %></h2>
+    <% @partner.student2 %>
+    <% elsif %>
+    <h2><%= @partner1_email.chomp('@steamup.com').capitalize %></h2>
+    <% @partner.student1 %>
+    <% else %>
+    <p>No Teaming Up today!</p>
+    <% end %>
+  <hr />
+
+</div>
