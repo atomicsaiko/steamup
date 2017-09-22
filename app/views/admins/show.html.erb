@@ -1,7 +1,25 @@
-<p>I'm the admin.</p>
+<p>I'm the admin!</p>
+
+<p>Your Admin ID: <%= @admin.id %></p>
+<p>Today's date: <%= Date.today %></p>
+<p>Day of the week: <%= Date.today.strftime("%A")%></p>
+<p>Weeknumber: <%= Date.today.strftime('%V').to_i %></p>
 
 <p>Number of Studentpairs: <%= @studentpair_count %></p>
 <%= link_to "Delete all Studentpairs", admins_studentpairs_delete_path, class: "btn btn-danger" %>
 <%= link_to "Create Studentpairs", admins_studentpairs_create_path, class: "btn btn-primary" %>
 </br>
 <p></p>
+
+<p><%= "=" * 50 %></p>
+
+<%= render 'week' %>
+
+<p><%= "=" * 50 %></p>
+
+<%= render 'next_week' %>
+
+
+
+
+
