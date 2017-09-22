@@ -8,7 +8,7 @@
 <% for pairs in Studentpair.where(date: wkBegin..wkEnd) %>
   <% while date.wday > 0 && date.wday < 6 do %>
     <% pairs = Studentpair.where(date: date).all %>
-    <b><p><%=date.strftime("%A")%></p></b>
+    <b><p><%=date.strftime("%A")%> | <%= date %> | Week nr. <%= date.strftime("%V")%></p></b>
       <% pairs.each do |pair| %>
       <p><%= (Student.find(pair.student1).email).chomp('@steamup.com') %> + <%= Student.find(pair.student2).email.chomp('@steamup.com') %></p>
       <% end %>
